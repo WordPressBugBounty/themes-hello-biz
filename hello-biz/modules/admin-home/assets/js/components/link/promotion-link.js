@@ -11,7 +11,7 @@ export const PromotionLink = (
 		image,
 		alt,
 		title,
-		message,
+		messages,
 		button,
 		url,
 		features,
@@ -20,10 +20,12 @@ export const PromotionLink = (
 		height = 100,
 		horizontalLayout = false,
 		upgrade = false,
+		backgroundImage = false,
 	} ) => {
 	const paperSx = horizontalLayout
 		? { display: 'flex', alignItems: 'center', justifyContent: 'space-between', p: 3, gap: 4, maxWidth: 600 }
 		: { p: 3 };
+	paperSx.backgroundImage = backgroundImage ? `url(${ backgroundImage })` : null;
 
 	const stackSx = horizontalLayout
 		? { flex: 0.6, alignItems: 'center', justifyContent: 'center' }
@@ -36,11 +38,13 @@ export const PromotionLink = (
 	const startIcon = upgrade ? <UpgradeIcon /> : null;
 
 	return (
-		<Paper sx={ paperSx }>
+		<Paper sx={ paperSx } backgroundImage >
 			<Stack direction="column" sx={ stackSx }>
 				<Image src={ image } alt={ alt } variant="square" sx={ { width, height } } />
 				<Typography sx={ { mt: 1 } } align="center" variant="h6">{ title }</Typography>
-				<Typography align="center" variant="body2" >{ message }</Typography>
+				{ messages.map( ( message, i ) => {
+					return <Typography key={ i } sx={ { mt: 0.6 } } align="center" variant="body2">{ message }</Typography>;
+				} ) }
 				<Button startIcon={ startIcon } sx={ { mt: 2 } } color="promotion" variant="contained" href={ url } target={ target } rel="noreferrer">{ button }</Button>
 			</Stack>
 

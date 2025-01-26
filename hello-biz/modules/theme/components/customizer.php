@@ -63,6 +63,8 @@ class Customizer {
 			true
 		);
 
+		wp_set_script_translations( $handle, 'hello-biz' );
+
 		wp_localize_script(
 			$handle,
 			'ehp_customizer',

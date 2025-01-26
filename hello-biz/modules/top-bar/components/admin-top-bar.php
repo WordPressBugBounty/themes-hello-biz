@@ -39,6 +39,8 @@ class Admin_Top_Bar {
 			$asset['version'],
 			true
 		);
+
+		wp_set_script_translations( $handle, 'hello-biz' );
 	}
 
 	public function __construct() {

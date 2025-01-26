@@ -18,15 +18,21 @@ class Promotions extends Rest_Base {
 		) {
 			$action_links_data[] = [
 				'type' => 'go-image-optimizer',
-				'image' => HELLO_BIZ_IMAGES_URL . 'image-optimizer.png',
+				'image' => HELLO_BIZ_IMAGES_URL . 'image-optimizer.svg',
 				'url' => Utils::get_plugin_install_url( 'image-optimization' ),
 				'alt' => __( 'Elementor Image Optimizer', 'hello-biz' ),
-				'title' => __( 'Image Optimizer', 'hello-biz' ),
-				'message' => __( 'Check out this incredibly useful plugin that will compress and optimize your images, giving you leaner, faster websites.', 'hello-biz' ),
+				'title' => '',
+				'messages' => [
+					__( 'Optimize Images.', 'hello-biz' ),
+					__( 'Reduce Size.', 'hello-biz' ),
+					__( 'Improve Speed.', 'hello-biz' ),
+					__( 'Try Image Optimizer for free', 'hello-biz' ),
+				],
 				'button' => __( 'Install', 'hello-biz' ),
-				'width' => 135,
+				'width' => 72,
 				'height' => 'auto',
 				'target' => '_self',
+				'backgroundImage' => HELLO_BIZ_IMAGES_URL . 'image-optimization-bg.svg',
 			];
 		}
 
@@ -40,7 +46,9 @@ class Promotions extends Rest_Base {
 				'url' => 'https://go.elementor.com/biz-home-wp-elementor-ai/',
 				'alt' => __( 'Elementor AI', 'hello-biz' ),
 				'title' => __( 'Elementor AI', 'hello-biz' ),
-				'message' => __( 'Boost creativity with Elementor AI. Craft & enhance copy, create custom CSS & Code, and generate images to elevate your website.', 'hello-biz' ),
+				'messages' => [
+					__( 'Boost creativity with Elementor AI. Craft & enhance copy, create custom CSS & Code, and generate images to elevate your website.', 'hello-biz' ),
+				],
 				'button' => __( 'Let\'s Go', 'hello-biz' ),
 			];
 		}
@@ -52,7 +60,9 @@ class Promotions extends Rest_Base {
 				'url' => 'https://go.elementor.com/biz-home-wp-elementor-plugin-pricing/',
 				'alt' => __( 'Elementor Pro', 'hello-biz' ),
 				'title' => __( 'Bring your vision to life', 'hello-biz' ),
-				'message' => __( 'Get complete design flexibility for your website with Elementor Pro’s advanced tools and premium features.', 'hello-biz' ),
+				'messages' => [
+					__( 'Get complete design flexibility for your website with Elementor Pro’s advanced tools and premium features.', 'hello-biz' ),
+				],
 				'button' => __( 'Upgrade Now', 'hello-biz' ),
 				'upgrade' => true,
 				'features' => [

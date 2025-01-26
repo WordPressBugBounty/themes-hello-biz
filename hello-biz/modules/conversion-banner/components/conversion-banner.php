@@ -51,6 +51,8 @@ class Conversion_Banner {
 			true
 		);
 
+		wp_set_script_translations( $handle, 'hello-biz' );
+
 		$button_text = __( 'Begin Setup', 'hello-biz' );
 		$button_link = Utils::get_hello_plus_activation_link();
 		$show_text = true;
