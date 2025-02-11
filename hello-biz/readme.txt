@@ -3,8 +3,8 @@
 Contributors: elementor, KingYes, ariel.k
 Requires at least: 6.0
 Tested up to: 6.5
-Stable tag: 1.0.2
-Version: 1.0.2
+Stable tag: 1.0.3
+Version: 1.0.3
 Requires PHP: 7.4
 License: GNU General Public License v3 or later
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
@@ -41,6 +41,9 @@ Images for starter content: [Free Stock Photos From Direct Media - StockSnap.io]
 License: [Creative Commons CC0 license](https://creativecommons.org/publicdomain/zero/1.0/)
 
 == Changelog ==
+
+= 1.0.3 - 2025-02-11 =
+* Tweak: Allow Skipping the default Header/Footer templates
 
 = 1.0.2 - 2025-01-22 =
 * Tweak: Theme URI

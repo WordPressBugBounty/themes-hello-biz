@@ -45,6 +45,11 @@ class Module extends Module_Base {
 		return ! Settings_Controller::should_hide_header_footer();
 	}
 
+	public function display_header_footer_filter( bool $display ): bool {
+		$show = self::display_header_footer();
+		return $show ? true : $display;
+	}
+
 	/**
 	 * Theme Scripts & Styles.
 	 *
@@ -86,5 +91,7 @@ class Module extends Module_Base {
 		parent::register_hooks();
 		add_action( 'after_setup_theme', [ $this, 'content_width' ], 0 );
 		add_action( 'wp_enqueue_scripts', [ $this, 'scripts_styles' ] );
+		add_filter( 'hello-plus-theme/display-default-footer', [ $this, 'display_header_footer_filter' ] );
+		add_filter( 'hello-plus-theme/display-default-header', [ $this, 'display_header_footer_filter' ] );
 	}
 }

@@ -33,7 +33,12 @@ $skip_link_url = apply_filters( 'hello-plus-theme/skip_link_url', '#content' );
 
 <?php
 if ( ! function_exists( 'elementor_theme_do_location' ) || ! elementor_theme_do_location( 'header' ) ) {
-	if ( \HelloBiz\Modules\Theme\Module::display_header_footer() ) {
+	/**
+	 * Display default header filter.
+	 *
+	 * @param bool $display Display default header.
+	 */
+	if ( apply_filters( 'hello-plus-theme/display-default-header', true ) ) {
 		get_template_part( 'template-parts/header' );
 	}
 }
