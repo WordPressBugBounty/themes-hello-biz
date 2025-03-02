@@ -10,6 +10,7 @@ export const SettingsProvider = ( { children } ) => {
 	const [ themeSettings, setThemeSettings ] = useState( {} );
 	const [ settingsUpdated, setSettingsUpdated ] = useState( false );
 	const [ helloPlusActive, setHelloPlusActive ] = useState( false );
+	const [ whatsNew, setWhatsNew ] = useState( [] );
 	const themeStyleUrl = document.getElementById( 'ehp-admin-settings' ).dataset.themestyleurl;
 
 	const updateSetting = ( settingsName, settingsValue ) => {
@@ -58,8 +59,10 @@ export const SettingsProvider = ( { children } ) => {
 	useEffect( () => {
 		Promise.all( [
 			apiFetch( { path: '/elementor-hello-biz/v1/theme-settings' } ),
-		] ).then( ( [ settings ] ) => {
+			apiFetch( { path: '/elementor-hello-biz/v1/whats-new' } ),
+		] ).then( ( [ settings, whatsNewData ] ) => {
 			setHelloPlusActive( settings.hello_plus_active );
+			setWhatsNew( whatsNewData );
 			setThemeSettings( settings.settings );
 		} ).finally( () => {
 			setIsLoading( false );
@@ -73,6 +76,7 @@ export const SettingsProvider = ( { children } ) => {
 			isLoading,
 			helloPlusActive,
 			themeStyleUrl,
+			whatsNew,
 		} }>
 			{ children }
 		</SettingsContext.Provider>

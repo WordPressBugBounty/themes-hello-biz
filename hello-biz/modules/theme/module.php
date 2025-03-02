@@ -32,6 +32,7 @@ class Module extends Module_Base {
 		return [
 			'Customizer',
 			'Theme_Support',
+			'Notificator',
 		];
 	}
 
@@ -47,7 +48,7 @@ class Module extends Module_Base {
 
 	public function display_header_footer_filter( bool $display ): bool {
 		$show = self::display_header_footer();
-		return $show ? true : $display;
+		return $show ? false : $display;
 	}
 
 	/**

@@ -10,6 +10,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 class Promotions extends Rest_Base {
+
 	public function get_promotions() {
 		$action_links_data = [];
 		if (
