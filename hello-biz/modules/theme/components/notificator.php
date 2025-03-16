@@ -15,7 +15,9 @@ class Notificator {
 	}
 
 	public function __construct() {
-		require_once HELLO_BIZ_PATH . '/vendor/autoload.php';
+		if ( ! class_exists( 'Elementor\WPNotificationsPackage\V110\Notifications' ) ) {
+			require_once HELLO_BIZ_PATH . '/vendor/autoload.php';
+		}
 
 		$this->notificator = new Notifications_SDK(
 			'hello-biz',
