@@ -3,8 +3,8 @@
 Contributors: elementor, KingYes, ariel.k
 Requires at least: 6.0
 Tested up to: 6.5
-Stable tag: 1.0.5
-Version: 1.0.5
+Stable tag: 1.0.6
+Version: 1.0.6
 Requires PHP: 7.4
 License: GNU General Public License v3 or later
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
@@ -20,7 +20,8 @@ it features a dedicated beginner-oriented “Home” screen to simplify and stre
 Hello Biz also integrates with Elementor’s premium features, giving you access to tools like AI,
 and accessibility enhancements in one place. Whether launching a startup site or refining a company portfolio,
 Hello Biz offers a solid, responsive foundation for all web creators.
-> Report security bugs through the Patchstack Vulnerability Disclosure Program. The Patchstack team validates, triages, and handles vulnerabilities. [Report here](https://patchstack.com/database/wordpress/theme/hello-biz/vdp)
+
+Report security bugs through the Patchstack Vulnerability Disclosure Program. The Patchstack team validates, triages, and handles vulnerabilities. [Report here](https://patchstack.com/database/wordpress/theme/hello-biz/vdp)
 
 == Copyright ==
 
@@ -87,6 +88,9 @@ License: [Creative Commons CC0 license](https://creativecommons.org/publicdomain
 >Report security bugs through the Patchstack Vulnerability Disclosure Program. The Patchstack team validates, triages, and handles vulnerabilities. [Report a security vulnerability](https://patchstack.com/database/wordpress/theme/hello-biz/vdp)
 
 == Changelog ==
+
+= 1.0.6 - 2025-03-30 =
+* Tweak: Update the theme description
 
 = 1.0.5 - 2025-03-02 =
 * Tweak: Add "changelog" modal to theme settings page

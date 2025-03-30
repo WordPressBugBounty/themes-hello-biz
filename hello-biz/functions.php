@@ -11,7 +11,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
 }
 
-define( 'HELLO_BIZ_ELEMENTOR_VERSION', '1.0.5' );
+define( 'HELLO_BIZ_ELEMENTOR_VERSION', '1.0.6' );
 define( 'EHP_THEME_SLUG', 'hello-biz' );
 
 define( 'HELLO_BIZ_PATH', get_template_directory() );
