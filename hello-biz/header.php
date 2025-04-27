@@ -39,6 +39,6 @@ if ( ! function_exists( 'elementor_theme_do_location' ) || ! elementor_theme_do_
 	 * @param bool $display Display default header.
 	 */
 	if ( apply_filters( 'hello-plus-theme/display-default-header', true ) ) {
-		get_template_part( 'template-parts/header' );
+		\get_template_part( 'template-parts/header' );
 	}
 }

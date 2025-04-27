@@ -14,18 +14,24 @@ class Settings_Controller {
 
 	const SETTINGS_META_KEY = 'ehp_theme_settings';
 	const SETTINGS_FILTER_NAME = 'hello-plus-theme/settings';
+	const SETTINGS_DEFAULT_FILTER_NAME = 'hello-plus-theme/settings/default';
 	const SKIP_LINK = 'skip_link';
 	const HEADER_FOOTER = 'header_footer';
 	const PAGE_TITLE = 'page_title';
 	const HELLO_THEME = 'hello_theme';
 
 	public static function get_default_setting(): array {
-		return [
-			self::SKIP_LINK => false,
-			self::HEADER_FOOTER => false,
-			self::PAGE_TITLE => true,
-			self::HELLO_THEME => false,
-		];
+		static $default_setting = null;
+		if ( is_null( $default_setting ) ) {
+			$default_setting = [
+				self::SKIP_LINK => apply_filters( self::SETTINGS_DEFAULT_FILTER_NAME . '/' . self::SKIP_LINK, false ),
+				self::HEADER_FOOTER => apply_filters( self::SETTINGS_DEFAULT_FILTER_NAME . '/' . self::HEADER_FOOTER, false ),
+				self::PAGE_TITLE => apply_filters( self::SETTINGS_DEFAULT_FILTER_NAME . '/' . self::PAGE_TITLE, true ),
+				self::HELLO_THEME => apply_filters( self::SETTINGS_DEFAULT_FILTER_NAME . '/' . self::HELLO_THEME, false ),
+			];
+		}
+
+		return $default_setting;
 	}
 
 	public static function get_settings(): array {

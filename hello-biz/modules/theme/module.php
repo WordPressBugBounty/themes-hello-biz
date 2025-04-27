@@ -38,7 +38,7 @@ class Module extends Module_Base {
 
 
 	/**
-	 * Check whether to display header footer.
+	 * Check whether to display the theme's default header & footer.
 	 *
 	 * @return bool
 	 */
@@ -48,7 +48,7 @@ class Module extends Module_Base {
 
 	public function display_header_footer_filter( bool $display ): bool {
 		$show = self::display_header_footer();
-		return $show ? false : $display;
+		return $show ? $display : false;
 	}
 
 	/**

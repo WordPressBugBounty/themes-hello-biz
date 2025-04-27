@@ -3,7 +3,7 @@
         'name' => 'elementor/hello-biz',
         'pretty_version' => 'dev-master',
         'version' => 'dev-master',
-        'reference' => '31e3df4f6b45561951df9e0c03a3d42057205df7',
+        'reference' => '85625754a7f3f47fc4ee2029feb0109f2a5738f2',
         'type' => 'library',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -13,7 +13,7 @@
         'elementor/hello-biz' => array(
             'pretty_version' => 'dev-master',
             'version' => 'dev-master',
-            'reference' => '31e3df4f6b45561951df9e0c03a3d42057205df7',
+            'reference' => '85625754a7f3f47fc4ee2029feb0109f2a5738f2',
             'type' => 'library',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),

@@ -10,7 +10,6 @@ export const Structure = () => {
 		themeSettings: { header_footer: headerFooter, page_title: pageTitle },
 		updateSetting,
 		isLoading,
-		helloPlusActive,
 	} = useSettingsContext();
 
 	if ( isLoading ) {
@@ -23,15 +22,15 @@ export const Structure = () => {
 				variant="subtitle2">
 				{ __( 'These settings relate to the structure of your pages.', 'hello-biz' ) }
 			</Typography>
-			{ ! helloPlusActive && <Setting
+			<Setting
 				value={ headerFooter }
 				label={ __( 'Disable theme header and footer', 'hello-biz' ) }
 				onSwitchClick={ () => updateSetting( 'header_footer', ! headerFooter ) }
 				description={ __( 'What it does: Removes the theme’s default header and footer sections from every page, along with their associated CSS/JS files.', 'hello-biz' ) }
 				code={ '<header id="site-header" class="site-header"> ... </header>\n' +
 					'<footer id="site-footer" class="site-footer"> ... </footer>' }
-				tip={ __( 'Tip: If you use a plugin like Elementor Pro for your headers and footers, disable the theme header and footer to improve performance.', 'hello-biz' ) }
-			/> }
+				tip={ __( 'Tip: If a Hello+ or Elementor Pro theme builder header or footer already exists on the website, it will get priority. In such case, this setting has no effect and the toggle will be ignored.', 'hello-biz' ) }
+			/>
 			<Setting
 				value={ pageTitle }
 				label={ __( 'Hide page title', 'hello-biz' ) }
