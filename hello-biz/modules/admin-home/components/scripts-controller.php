@@ -40,5 +40,16 @@ class Scripts_Controller {
 		);
 
 		wp_set_script_translations( $handle, 'hello-biz' );
+
+		$user_id = get_current_user_id();
+		$install_confirmation_dismissed = get_user_meta( $user_id, 'ehp_install_confirmation_dismissed', true );
+
+		wp_localize_script(
+			$handle,
+			'ehpAdminData',
+			[
+				'installConfirmationDismissed' => (bool) $install_confirmation_dismissed,
+			]
+		);
 	}
 }

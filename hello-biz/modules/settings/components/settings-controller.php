@@ -2,10 +2,6 @@
 
 namespace HelloBiz\Modules\Settings\Components;
 
-use HelloPlus\Modules\Admin\Classes\Menu\Pages\Kits_Library;
-use HelloPlus\Modules\Admin\Classes\Menu\Pages\Settings;
-use HelloPlus\Modules\Admin\Classes\Menu\Pages\Setup_Wizard;
-
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
 }
@@ -15,6 +11,7 @@ class Settings_Controller {
 	const SETTINGS_META_KEY = 'ehp_theme_settings';
 	const SETTINGS_FILTER_NAME = 'hello-plus-theme/settings';
 	const SETTINGS_DEFAULT_FILTER_NAME = 'hello-plus-theme/settings/default';
+	const DESCRIPTION_META_TAG = 'description_meta_tag';
 	const SKIP_LINK = 'skip_link';
 	const HEADER_FOOTER = 'header_footer';
 	const PAGE_TITLE = 'page_title';
@@ -28,6 +25,7 @@ class Settings_Controller {
 				self::HEADER_FOOTER => apply_filters( self::SETTINGS_DEFAULT_FILTER_NAME . '/' . self::HEADER_FOOTER, false ),
 				self::PAGE_TITLE => apply_filters( self::SETTINGS_DEFAULT_FILTER_NAME . '/' . self::PAGE_TITLE, true ),
 				self::HELLO_THEME => apply_filters( self::SETTINGS_DEFAULT_FILTER_NAME . '/' . self::HELLO_THEME, false ),
+				self::DESCRIPTION_META_TAG => apply_filters( self::SETTINGS_DEFAULT_FILTER_NAME . '/' . self::DESCRIPTION_META_TAG, false ),
 			];
 		}
 
@@ -58,6 +56,10 @@ class Settings_Controller {
 
 	public static function should_hide_hello_theme() {
 		return self::get_option( self::HELLO_THEME );
+	}
+
+	public static function should_hide_description_meta_tag() {
+		return self::get_option( self::DESCRIPTION_META_TAG );
 	}
 
 	public function maybe_initialize_settings() {

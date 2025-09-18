@@ -1,6 +1,7 @@
 <?php
 namespace HelloBiz\Modules\Theme\Components;
 
+use HelloBiz\Modules\Settings\Components\Settings_Controller;
 use HelloBiz\Modules\Theme\Module;
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -107,7 +108,26 @@ class Theme_Support {
 		}
 	}
 
+	public function add_description_meta_tag() {
+		if ( Settings_Controller::should_hide_description_meta_tag() ) {
+			return;
+		}
+
+		if ( ! is_singular() ) {
+			return;
+		}
+
+		$post = get_queried_object();
+
+		if ( empty( $post->post_excerpt ) ) {
+			return;
+		}
+
+		echo '<meta name="description" content="' . esc_attr( wp_strip_all_tags( $post->post_excerpt ) ) . '">' . "\n";
+	}
+
 	public function __construct() {
 		add_action( 'after_setup_theme', [ $this, 'setup' ] );
+		add_action( 'wp_head', [ $this, 'add_description_meta_tag' ] );
 	}
 }

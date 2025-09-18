@@ -85,6 +85,19 @@ class Module extends Module_Base {
 		$GLOBALS['content_width'] = apply_filters( 'hello-plus-theme/content_width', 800 );
 	}
 
+	public function add_hello_biz_finder_entry( $categories_data ) {
+		if ( isset( $categories_data['site'] ) && isset( $categories_data['site']['items'] ) ) {
+			$categories_data['site']['items']['hello-biz-home'] = [
+				'title' => esc_html__( 'Hello Biz Home', 'hello-biz' ),
+				'icon' => 'paint-brush',
+				'url' => admin_url( 'admin.php?page=hello-biz' ),
+				'keywords' => [ 'theme', 'biz', 'business', 'hello', 'home', 'plus', '+' ],
+			];
+		}
+
+		return $categories_data;
+	}
+
 	/**
 	 * @inheritDoc
 	 */
@@ -94,5 +107,6 @@ class Module extends Module_Base {
 		add_action( 'wp_enqueue_scripts', [ $this, 'scripts_styles' ] );
 		add_filter( 'hello-plus-theme/display-default-footer', [ $this, 'display_header_footer_filter' ] );
 		add_filter( 'hello-plus-theme/display-default-header', [ $this, 'display_header_footer_filter' ] );
+		add_filter( 'elementor/finder/categories', [ $this, 'add_hello_biz_finder_entry' ] );
 	}
 }

@@ -89,6 +89,15 @@ License: [Creative Commons CC0 license](https://creativecommons.org/publicdomain
 
 == Changelog ==
 
+= 1.2.0 - 2025-09-18 =
+* New: Added onboarding banners for users installing Hello Biz after installing an Elementor kit
+* New: Added admin bar link to return to theme home from the front end 
+* New: Added Hello Biz home link to the Finder
+* Tweak: Refactored behavior of links in the customizer to better reflect the flow
+* Tweak: Unified Theme Settings options and UI across all Hello themes for a more consistent experience
+* Fix: Improved banner display on certain pages for consistency
+* Fix: Show the Theme Builder link on the theme home page and in the menu when Elementor is active
+
 = 1.1.1 - 2025-06-15 =
 * Fix: Empty Setting page when admin language is not English
 * Tweak: Home page links and styling

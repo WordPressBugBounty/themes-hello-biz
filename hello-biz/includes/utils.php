@@ -33,6 +33,22 @@ class Utils {
 		return self::$elementor_active;
 	}
 
+	public static function get_theme_builder_slug(): string {
+		if ( ! class_exists( 'Elementor\App\App' ) ) {
+			return '';
+		}
+
+		if ( self::has_pro() ) {
+			return App::PAGE_ID . '&ver=' . ELEMENTOR_VERSION . '#site-editor';
+		}
+
+		if ( self::is_elementor_active() ) {
+			return App::PAGE_ID . '&ver=' . ELEMENTOR_VERSION . '#site-editor/promotion';
+		}
+
+		return '';
+	}
+
 	public static function is_elementor_installed(): bool {
 		if ( null === self::$elementor_installed ) {
 			self::$elementor_installed = file_exists( WP_PLUGIN_DIR . '/elementor/elementor.php' );
@@ -91,13 +107,13 @@ class Utils {
 			];
 		}
 
-		if ( self::has_pro() ) {
-			$url = admin_url( 'admin.php?page=' . App::PAGE_ID . '&ver=' . ELEMENTOR_VERSION ) . '#site-editor';
+		if ( self::is_elementor_active() ) {
+			$url = admin_url( 'admin.php?page=' . App::PAGE_ID . '&ver=' . ELEMENTOR_VERSION ) . '#site-editor/promotion';
 			$target = '_self';
 		}
 
-		if ( self::is_elementor_active() ) {
-			$url = admin_url( 'admin.php?page=' . App::PAGE_ID . '&ver=' . ELEMENTOR_VERSION ) . '#site-editor/promotion';
+		if ( self::has_pro() ) {
+			$url = admin_url( 'admin.php?page=' . App::PAGE_ID . '&ver=' . ELEMENTOR_VERSION ) . '#site-editor';
 			$target = '_self';
 		}
 
@@ -105,5 +121,27 @@ class Utils {
 			'link' => $url,
 			'target' => $target,
 		];
+	}
+
+	public static function has_at_least_one_kit() {
+		static $is_setup_wizard_completed = null;
+
+		if ( ! class_exists( '\Elementor\App\Modules\ImportExport\Processes\Revert' ) ) {
+			return false;
+		}
+
+		if ( ! is_null( $is_setup_wizard_completed ) ) {
+			return $is_setup_wizard_completed;
+		}
+
+		$sessions = \Elementor\App\Modules\ImportExport\Processes\Revert::get_import_sessions();
+
+		if ( ! $sessions ) {
+			return false;
+		}
+
+		$last_session = end( $sessions );
+
+		return ! empty( $last_session );
 	}
 }

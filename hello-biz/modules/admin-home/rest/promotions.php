@@ -42,7 +42,7 @@ class Promotions extends Rest_Base {
 				'type' => 'go-send',
 				'image' => HELLO_BIZ_IMAGES_URL . 'send-logo.gif',
 				'backgroundColor' => '#EFEFFF',
-				'url' => 'https://go.elementor.com/Hello_Biz_send',
+				'url' => Utils::get_plugin_install_url( 'send-app' ),
 				'alt' => __( 'Send', 'hello-biz' ),
 				'title' => '',
 				'messages' => [
@@ -51,6 +51,7 @@ class Promotions extends Rest_Base {
 				'button' => __( 'Install', 'hello-biz' ),
 				'buttonBgColor' => '#524CFF',
 				'width' => 72,
+				'target' => '_self',
 				'height' => 'auto',
 			];
 		} elseif (

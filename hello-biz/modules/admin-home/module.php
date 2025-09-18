@@ -30,6 +30,7 @@ class Module extends Module_Base {
 	protected function get_component_ids(): array {
 		return [
 			'Admin_Menu_Controller',
+			'Admin_Bar_Controller',
 			'Scripts_Controller',
 			'Api_Controller',
 		];

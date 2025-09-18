@@ -3,7 +3,8 @@
 namespace HelloBiz\Modules\ConversionBanner\Components;
 
 use HelloBiz\Includes\Utils;
-use HelloBiz\Modules\AdminHome\Module;
+use HelloBiz\Includes\Welcome_Banner_Config;
+use HelloBiz\Includes\Banner_State_Provider;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
@@ -23,13 +24,30 @@ class Conversion_Banner {
 			return false;
 		}
 
+		if ( Utils::has_at_least_one_kit() && Utils::is_hello_plus_active() ) {
+			return false;
+		}
+
 		if ( Utils::is_hello_plus_setup_wizard_done() ) {
 			return false;
 		}
 
 		$current_screen = get_current_screen();
+		if ( ! $current_screen ) {
+			return false;
+		}
 
-		return false === strpos( $current_screen->id ?? '', Module::MENU_PAGE_SLUG );
+		$allowed_screens = [
+			'dashboard',
+			'edit-post',
+			'edit-page',
+			'edit-elementor_library',
+			'themes',
+			'plugins',
+			'plugin-install',
+		];
+
+		return in_array( $current_screen->id, $allowed_screens, true );
 	}
 
 	private function enqueue_scripts() {
@@ -53,15 +71,17 @@ class Conversion_Banner {
 
 		wp_set_script_translations( $handle, 'hello-biz' );
 
-		$button_text = __( 'Begin Setup', 'hello-biz' );
-		$button_link = Utils::get_hello_plus_activation_link();
-		$show_text = true;
+		$state_provider = new Banner_State_Provider();
+		$banner_config = new Welcome_Banner_Config( $state_provider );
 
-		if ( Utils::is_elementor_active() && Utils::is_hello_plus_active() && ! Utils::is_hello_plus_setup_wizard_done() ) {
-			$button_link = self_admin_url( 'admin.php?page=hello-plus-setup-wizard' );
-			$button_text = __( 'Finish Setup', 'hello-biz' );
-			$show_text = false;
-		}
+		$title = $banner_config->get_title();
+		$description = $banner_config->get_description();
+		$button_text = $banner_config->get_primary_button_text();
+		$button_link = Utils::is_hello_plus_active() ?
+			$banner_config->get_primary_button_link() :
+			admin_url( 'admin.php?page=hello-biz&start-install=true' );
+		$agreement_text = $banner_config->get_agreement_text();
+		$show_text = ! empty( $agreement_text );
 
 		$is_installing_plugin_with_uploader = 'upload-plugin' === filter_input( INPUT_GET, 'action', FILTER_UNSAFE_RAW );
 
@@ -69,15 +89,14 @@ class Conversion_Banner {
 			$handle,
 			'ehp_cb',
 			[
-				'ajax_url' => self_admin_url( 'admin-ajax.php' ),
-				'nonce' => wp_create_nonce( 'ehp_cb_nonce' ),
-				'imageUrl' => HELLO_BIZ_IMAGES_URL . 'banner-image.png',
+				'imageUrl' => $banner_config->get_image_config()['src'],
 				'buttonText' => $button_text,
 				'buttonUrl' => $button_link,
-				'isHelloPlusInstalled' => Utils::is_hello_plus_installed(),
-				'nonceInstall' => wp_create_nonce( 'updates' ),
 				'showText' => $show_text,
+				'agreementText' => $agreement_text,
 				'beforeWrap' => $is_installing_plugin_with_uploader,
+				'title' => $title,
+				'description' => $description,
 			]
 		);
 	}
