@@ -130,6 +130,7 @@ class Admin_Config extends Rest_Base {
 			'ID' => $page_id,
 			'post_title' => 'Hello Biz #' . $page_id,
 		]);
+
 		return $page_id;
 	}
 
@@ -203,6 +204,7 @@ class Admin_Config extends Rest_Base {
 			'showSublinks' => true,
 			'sublinks'     => [],
 		];
+
 		$footer_part = [
 			'id'           => 'footer',
 			'title'        => __( 'Footer', 'hello-biz' ),
@@ -238,6 +240,7 @@ class Admin_Config extends Rest_Base {
 			),
 			'sitePages' => $site_pages,
 			'general'   => $general,
+			'kits'      => $this->get_kits_links(),
 		];
 
 		$config['siteParts'] = apply_filters( 'hello-plus-theme/template-parts', $site_parts );
@@ -320,6 +323,43 @@ class Admin_Config extends Rest_Base {
 		}
 
 		return $config;
+	}
+
+	private function get_kits_links(): array {
+		$is_elementor_active = Utils::is_elementor_active();
+		$is_hello_plus_active = Utils::is_hello_plus_active();
+
+		if ( ! $is_elementor_active || ! $is_hello_plus_active ) {
+			return [];
+		}
+
+		$kits = [];
+
+		$has_kit_installed = Utils::has_at_least_one_kit();
+
+		if ( $has_kit_installed ) {
+			$kits[] = [
+				'title' => __( 'Remove', 'hello-biz' ),
+				'link'  => admin_url( 'admin.php?page=elementor-tools&scroll_to_revert=1#tab-import-export-kit' ),
+				'icon'  => 'BanIcon',
+			];
+		}
+
+		$kits[] = [
+			'title' => __( 'Import', 'hello-biz' ),
+			'link'  => admin_url( 'admin.php?page=elementor-tools#tab-import-export-kit' ),
+			'icon'  => 'UploadIcon',
+		];
+
+		if ( $has_kit_installed ) {
+			$kits[] = [
+				'title' => __( 'Export', 'hello-biz' ),
+				'link'  => admin_url( 'admin.php?page=elementor-tools#tab-import-export-kit' ),
+				'icon'  => 'DownloadIcon',
+			];
+		}
+
+		return $kits;
 	}
 
 	public function get_welcome_box_config( array $config ): array {

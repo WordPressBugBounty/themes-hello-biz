@@ -2,6 +2,8 @@
 
 namespace HelloBiz\Includes;
 
+use HelloPlus\Modules\Admin\Components\Blank_Canvas_Page_Creator;
+
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
@@ -23,6 +25,7 @@ class Welcome_Banner_Config {
 			case Banner_State_Provider::STATE_NOT_SETUP:
 				return __( 'Almost there', 'hello-biz' );
 			case Banner_State_Provider::STATE_SETUP_COMPLETE:
+			case Banner_State_Provider::STATE_BLANK_CANVAS_CHOSEN:
 				return __( 'Hello Biz Home', 'hello-biz' );
 			default:
 				return __( 'Welcome to Hello Biz', 'hello-biz' );
@@ -38,6 +41,7 @@ class Welcome_Banner_Config {
 			case Banner_State_Provider::STATE_NOT_SETUP:
 				return __( 'Choose a website template and start customizing your site.', 'hello-biz' );
 			case Banner_State_Provider::STATE_SETUP_COMPLETE:
+			case Banner_State_Provider::STATE_BLANK_CANVAS_CHOSEN:
 				return __( 'Access everything you need to set up and manage your website.', 'hello-biz' );
 			default:
 				return __( 'Access the full suite of features, including website templates, header and footer templates, and extra widgets.', 'hello-biz' );
@@ -47,7 +51,14 @@ class Welcome_Banner_Config {
 	public function get_primary_button_text(): string {
 		$state = $this->state_provider->get_current_state();
 
+		$has_home_page = $this->has_home_page();
+
 		switch ( $state ) {
+			case Banner_State_Provider::STATE_BLANK_CANVAS_CHOSEN:
+				if ( $has_home_page ) {
+					return __( 'Edit home page', 'hello-biz' );
+				}
+				return __( 'Create home page', 'hello-biz' );
 			case Banner_State_Provider::STATE_ONE_KIT_INSTALLED:
 			case Banner_State_Provider::STATE_NOT_SETUP:
 				return __( 'Finish setup', 'hello-biz' );
@@ -60,8 +71,20 @@ class Welcome_Banner_Config {
 
 	public function get_primary_button_link(): string {
 		$state = $this->state_provider->get_current_state();
+		$has_home_page = $this->has_home_page();
+		$blank_canvas_redirect_url = $this->get_blank_canvas_redirect_url();
+		$edit_home_page_link = add_query_arg(
+			'action',
+			'elementor',
+			get_edit_post_link( get_option( 'page_on_front' ), 'admin' )
+		);
 
 		switch ( $state ) {
+			case Banner_State_Provider::STATE_BLANK_CANVAS_CHOSEN:
+				if ( $has_home_page ) {
+					return $edit_home_page_link;
+				}
+				return $blank_canvas_redirect_url;
 			case Banner_State_Provider::STATE_NOT_SETUP:
 				return self_admin_url( 'admin.php?page=hello-plus-setup-wizard' );
 			case Banner_State_Provider::STATE_SETUP_COMPLETE:
@@ -86,7 +109,9 @@ class Welcome_Banner_Config {
 		$state = $this->state_provider->get_current_state();
 		$cta_text = $this->get_primary_button_text();
 
-		if ( Banner_State_Provider::STATE_SETUP_COMPLETE === $state ) {
+		if ( Banner_State_Provider::STATE_SETUP_COMPLETE === $state ||
+			Banner_State_Provider::STATE_BLANK_CANVAS_CHOSEN === $state
+		) {
 			return [
 				'src' => '',
 				'alt' => '',
@@ -108,7 +133,9 @@ class Welcome_Banner_Config {
 	public function get_video_config(): string {
 		$state = $this->state_provider->get_current_state();
 
-		if ( Banner_State_Provider::STATE_SETUP_COMPLETE === $state ) {
+		if ( Banner_State_Provider::STATE_SETUP_COMPLETE === $state ||
+			Banner_State_Provider::STATE_BLANK_CANVAS_CHOSEN === $state
+		) {
 			return 'https://www.youtube.com/embed/bjoG0sU9K0M';
 		}
 
@@ -118,7 +145,9 @@ class Welcome_Banner_Config {
 	public function get_secondary_button_config(): array {
 		$state = $this->state_provider->get_current_state();
 
-		if ( Banner_State_Provider::STATE_SETUP_COMPLETE === $state ) {
+		if ( Banner_State_Provider::STATE_SETUP_COMPLETE === $state ||
+			Banner_State_Provider::STATE_BLANK_CANVAS_CHOSEN === $state
+		) {
 			return [
 				'title'   => __( 'View site', 'hello-biz' ),
 				'variant' => 'outlined',
@@ -159,5 +188,21 @@ class Welcome_Banner_Config {
 		}
 
 		return $config;
+	}
+
+	private function get_blank_canvas_redirect_url(): string {
+		if ( ! class_exists( 'HelloPlus\Modules\Admin\Components\Blank_Canvas_Page_Creator' ) ) {
+			return '';
+		}
+
+		return add_query_arg(
+			[ 'action' => Blank_Canvas_Page_Creator::ACTION_PARAM ],
+			self_admin_url( 'admin.php' )
+		);
+	}
+
+	private function has_home_page(): bool {
+		$page_on_front = get_option( 'page_on_front', 0 );
+		return (int) $page_on_front > 0;
 	}
 }

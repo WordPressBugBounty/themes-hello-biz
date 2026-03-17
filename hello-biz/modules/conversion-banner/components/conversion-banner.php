@@ -28,7 +28,7 @@ class Conversion_Banner {
 			return false;
 		}
 
-		if ( Utils::is_hello_plus_setup_wizard_done() ) {
+		if ( Utils::is_hello_plus_setup_wizard_done() || Utils::has_chosen_blank_canvas() ) {
 			return false;
 		}
 
@@ -97,6 +97,7 @@ class Conversion_Banner {
 				'beforeWrap' => $is_installing_plugin_with_uploader,
 				'title' => $title,
 				'description' => $description,
+				'nonce' => wp_create_nonce( 'ehp_cb_nonce' ),
 			]
 		);
 	}

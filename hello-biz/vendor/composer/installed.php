@@ -1,9 +1,9 @@
 <?php return array(
     'root' => array(
         'name' => 'elementor/hello-biz',
-        'pretty_version' => '1.2.x-dev',
-        'version' => '1.2.9999999.9999999-dev',
-        'reference' => '4da7ab5c36b56a127c119906a0735b5ebe34ac4b',
+        'pretty_version' => 'dev-main',
+        'version' => 'dev-main',
+        'reference' => 'a7d36a0145fad990e969478effb9212014cda25f',
         'type' => 'library',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -11,9 +11,9 @@
     ),
     'versions' => array(
         'elementor/hello-biz' => array(
-            'pretty_version' => '1.2.x-dev',
-            'version' => '1.2.9999999.9999999-dev',
-            'reference' => '4da7ab5c36b56a127c119906a0735b5ebe34ac4b',
+            'pretty_version' => 'dev-main',
+            'version' => 'dev-main',
+            'reference' => 'a7d36a0145fad990e969478effb9212014cda25f',
             'type' => 'library',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),

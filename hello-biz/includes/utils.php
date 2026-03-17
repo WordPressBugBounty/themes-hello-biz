@@ -13,6 +13,8 @@ if ( ! defined( 'ABSPATH' ) ) {
  **/
 class Utils {
 
+	const MIN_ELEMENTOR_CUSTOMIZATION_VERSION = '3.34.0';
+
 	private static ?bool $elementor_installed = null;
 
 	private static ?bool $elementor_active = null;
@@ -57,15 +59,15 @@ class Utils {
 		return self::$elementor_installed;
 	}
 
-	public static function is_hello_plus_active() {
+	public static function is_hello_plus_active(): bool {
 		return defined( 'HELLO_PLUS_VERSION' );
 	}
 
-	public static function is_hello_plus_installed() {
+	public static function is_hello_plus_installed(): bool {
 		return file_exists( WP_PLUGIN_DIR . '/hello-plus/hello-plus.php' );
 	}
 
-	public static function is_hello_plus_setup_wizard_done() {
+	public static function is_hello_plus_setup_wizard_done(): bool {
 		if ( ! class_exists( 'HelloPlus\Modules\Admin\Classes\Menu\Pages\Setup_Wizard' ) ) {
 			return false;
 		}
@@ -73,7 +75,15 @@ class Utils {
 		return \HelloPlus\Modules\Admin\Classes\Menu\Pages\Setup_Wizard::has_site_wizard_been_completed();
 	}
 
-	public static function get_hello_plus_activation_link() {
+	public static function has_chosen_blank_canvas(): bool {
+		if ( ! class_exists( 'HelloPlus\Modules\Admin\Classes\Ajax\Blank_Canvas_Option' ) ) {
+			return false;
+		}
+
+		return \HelloPlus\Modules\Admin\Classes\Ajax\Blank_Canvas_Option::has_chosen_blank_canvas();
+	}
+
+	public static function get_hello_plus_activation_link(): string {
 		$plugin = 'hello-plus/hello-plus.php';
 
 		$url = 'plugins.php?action=activate&plugin=' . $plugin . '&plugin_status=all';
@@ -124,24 +134,30 @@ class Utils {
 	}
 
 	public static function has_at_least_one_kit() {
-		static $is_setup_wizard_completed = null;
+		static $has_at_least_one_kit = null;
 
-		if ( ! class_exists( '\Elementor\App\Modules\ImportExport\Processes\Revert' ) ) {
+		if ( ! is_null( $has_at_least_one_kit ) ) {
+			return $has_at_least_one_kit;
+		}
+
+		if ( ! self::is_elementor_active() ) {
 			return false;
 		}
 
-		if ( ! is_null( $is_setup_wizard_completed ) ) {
-			return $is_setup_wizard_completed;
+		if ( version_compare( ELEMENTOR_VERSION, self::MIN_ELEMENTOR_CUSTOMIZATION_VERSION, '>=' ) ) {
+			if ( ! class_exists( '\Elementor\App\Modules\ImportExportCustomization\Processes\Revert' ) ) {
+				return false;
+			}
+
+			$sessions = \Elementor\App\Modules\ImportExportCustomization\Processes\Revert::get_import_sessions();
+		} else {
+			if ( ! class_exists( '\Elementor\App\Modules\ImportExport\Processes\Revert' ) ) {
+				return false;
+			}
+
+			$sessions = \Elementor\App\Modules\ImportExport\Processes\Revert::get_import_sessions();
 		}
 
-		$sessions = \Elementor\App\Modules\ImportExport\Processes\Revert::get_import_sessions();
-
-		if ( ! $sessions ) {
-			return false;
-		}
-
-		$last_session = end( $sessions );
-
-		return ! empty( $last_session );
+		return ! empty( $sessions );
 	}
 }

@@ -37,24 +37,7 @@ class Promotions extends Rest_Base {
 			];
 		}
 
-		if ( ! defined( 'SEND_VERSION' ) ) {
-			$action_links_data[] = [
-				'type' => 'go-send',
-				'image' => HELLO_BIZ_IMAGES_URL . 'send-logo.gif',
-				'backgroundColor' => '#EFEFFF',
-				'url' => Utils::get_plugin_install_url( 'send-app' ),
-				'alt' => __( 'Send', 'hello-biz' ),
-				'title' => '',
-				'messages' => [
-					__( 'Connect any website to automated Email & SMS workflows in a click with Send.', 'hello-biz' ),
-				],
-				'button' => __( 'Install', 'hello-biz' ),
-				'buttonBgColor' => '#524CFF',
-				'width' => 72,
-				'target' => '_self',
-				'height' => 'auto',
-			];
-		} elseif (
+		if (
 			! defined( 'ELEMENTOR_AI_VERSION' ) &&
 			Utils::is_elementor_installed()
 		) {
