@@ -3,8 +3,8 @@
 Contributors: elementor, KingYes, ariel.k
 Requires at least: 6.0
 Tested up to: 6.8
-Stable tag: 1.2.1
-Version: 1.2.1
+Stable tag: 1.2.2
+Version: 1.2.2
 Requires PHP: 7.4
 License: GNU General Public License v3 or later
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
@@ -88,6 +88,9 @@ License: [Creative Commons CC0 license](https://creativecommons.org/publicdomain
 >Report security bugs through the Patchstack Vulnerability Disclosure Program. The Patchstack team validates, triages, and handles vulnerabilities. [Report a security vulnerability](https://patchstack.com/database/wordpress/theme/hello-biz/vdp)
 
 == Changelog ==
+
+= 1.2.2 - 2026-05-24 =
+* Fix: CSS improvements for Elementor widgets
 
 = 1.2.1 - 2026-03-16 =
 * Tweak: Updated theme homepage.
